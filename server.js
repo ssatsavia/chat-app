@@ -14,7 +14,7 @@ app.use(express.static('public')); // Serve static files from the public directo
 
 // MongoDB connection
 mongoose
-    .connect('mongodb://localhost/chat', {
+    .connect('mongodb+srv://sagesatsavia2607:Ae90WIsINstgLgc4@chat-app.431tg.mongodb.net/chat', {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     })
@@ -38,19 +38,7 @@ const Message = mongoose.model('Message', messageSchema);
 
 // Routes
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/index.html'); // Single combined page for login/register
-});
-
-// Clear Chat Endpoint
-app.delete('/clear-chat', async (req, res) => {
-    try {
-        await Message.deleteMany({}); // Delete all messages from the database
-        console.log('All chat messages cleared.');
-        res.status(200).json({ message: 'Chat cleared successfully.' });
-    } catch (error) {
-        console.error('Error clearing chat:', error);
-        res.status(500).json({ error: 'Failed to clear chat.' });
-    }
+    res.sendFile(__dirname + '/public/index.html'); // Landing/login/register page
 });
 
 // Register endpoint
@@ -122,13 +110,20 @@ io.on('connection', (socket) => {
         }
     });
 
+    // Handle chat messages
     socket.on('chat message', async (msg) => {
-        if (!socket.username) return;
+        if (!socket.username || !msg) {
+            console.error('Invalid message data:', { username: socket.username, msg });
+            return;
+        }
 
-        const message = new Message({ username: socket.username, message: msg });
-        await message.save();
-
-        io.emit('chat message', { username: socket.username, message: msg });
+        try {
+            const newMessage = new Message({ username: socket.username, message: msg });
+            await newMessage.save(); // Save to MongoDB
+            io.emit('chat message', { username: socket.username, message: msg }); // Broadcast to all
+        } catch (err) {
+            console.error('Error saving message:', err);
+        }
     });
 
     socket.on('disconnect', () => {
@@ -137,7 +132,7 @@ io.on('connection', (socket) => {
 });
 
 // Start server
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
