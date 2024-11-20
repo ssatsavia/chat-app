@@ -2,8 +2,7 @@ const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs'); // Use bcryptjs instead of bcrypt
-require('dotenv').config(); // Load environment variables from .env file
+const bcrypt = require('bcryptjs');
 
 const app = express();
 const server = http.createServer(app);
@@ -15,7 +14,7 @@ app.use(express.static('public')); // Serve static files from the public directo
 
 // MongoDB connection
 mongoose
-    .connect(process.env.MONGO_URI, {
+    .connect(process.env.MONGO_URI || 'mongodb://localhost/chat', {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     })
@@ -29,13 +28,8 @@ const userSchema = new mongoose.Schema({
 });
 const User = mongoose.model('User', userSchema);
 
-// Message schema
-const messageSchema = new mongoose.Schema({
-    username: String,
-    message: String,
-    timestamp: { type: Date, default: Date.now },
-});
-const Message = mongoose.model('Message', messageSchema);
+// In-memory store for chat messages
+let chatMessages = [];
 
 // Routes
 app.get('/', (req, res) => {
@@ -97,14 +91,14 @@ app.post('/login', async (req, res) => {
 io.on('connection', (socket) => {
     console.log('A user connected:', socket.id);
 
-    socket.on('authenticate', async ({ username }) => {
-        const user = await User.findOne({ username });
-        if (user) {
+    socket.on('authenticate', ({ username }) => {
+        if (username) {
             socket.username = username;
             socket.emit('authenticated', username);
 
-            const messages = await Message.find().sort({ timestamp: 1 });
-            socket.emit('previous messages', messages);
+            // Clear chat messages when a new user logs in
+            chatMessages = []; // Clear messages for the session
+            console.log(`Chat cleared for user: ${username}`);
         } else {
             socket.emit('auth error', 'Authentication failed. Please log in again.');
             socket.disconnect();
@@ -112,38 +106,21 @@ io.on('connection', (socket) => {
     });
 
     // Handle chat messages
-    socket.on('chat message', async (msg) => {
+    socket.on('chat message', (msg) => {
         if (!socket.username || !msg) {
             console.error('Invalid message data:', { username: socket.username, msg });
             return;
         }
 
-        try {
-            const newMessage = new Message({ username: socket.username, message: msg });
-            await newMessage.save(); // Save to MongoDB
-            io.emit('chat message', { username: socket.username, message: msg }); // Broadcast to all
-        } catch (err) {
-            console.error('Error saving message:', err);
-        }
+        const message = { username: socket.username, message: msg };
+        chatMessages.push(message); // Add message to in-memory store
+        io.emit('chat message', message); // Broadcast to all
     });
 
     socket.on('disconnect', () => {
         console.log(`User ${socket.username || socket.id} disconnected.`);
     });
 });
-
-// Clear Chat Endpoint
-app.delete('/clear-chat', async (req, res) => {
-    try {
-        await Message.deleteMany({}); // Delete all messages from the database
-        console.log('All chat messages cleared.');
-        res.status(200).json({ message: 'Chat cleared successfully.' });
-    } catch (error) {
-        console.error('Error clearing chat:', error);
-        res.status(500).json({ error: 'Failed to clear chat.' });
-    }
-});
-
 
 // Start server
 const PORT = process.env.PORT || 3000;
