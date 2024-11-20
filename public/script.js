@@ -11,6 +11,7 @@ const welcomeMessage = document.getElementById('welcome-message');
 const messages = document.getElementById('messages');
 const messageInput = document.getElementById('message-input');
 const sendButton = document.getElementById('send-button');
+const clearChatButton = document.getElementById('clear-chat-button');
 
 let username = '';
 
@@ -53,8 +54,6 @@ loginButton.addEventListener('click', async () => {
     }
 });
 
-
-
 // Chat
 sendButton.addEventListener('click', () => {
     const message = messageInput.value.trim();
@@ -78,4 +77,10 @@ socket.on('previous messages', (msgs) => {
     });
 });
 
-
+// Clear Chat Button
+clearChatButton.addEventListener('click', () => {
+    // Remove all child elements in the messages container
+    while (messages.firstChild) {
+        messages.removeChild(messages.firstChild);
+    }
+});

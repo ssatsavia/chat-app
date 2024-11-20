@@ -132,6 +132,19 @@ io.on('connection', (socket) => {
     });
 });
 
+// Clear Chat Endpoint
+app.delete('/clear-chat', async (req, res) => {
+    try {
+        await Message.deleteMany({}); // Delete all messages from the database
+        console.log('All chat messages cleared.');
+        res.status(200).json({ message: 'Chat cleared successfully.' });
+    } catch (error) {
+        console.error('Error clearing chat:', error);
+        res.status(500).json({ error: 'Failed to clear chat.' });
+    }
+});
+
+
 // Start server
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {

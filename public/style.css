@@ -1,7 +1,7 @@
 /* General Body Styling */
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: "Cinzel", serif; /* Royal font */
     background-image: url('chat.jpg'); /* Background image for the whole page */
     background-size: cover; /* Ensures the image covers the entire page */
     background-position: center; /* Centers the image */
@@ -13,6 +13,7 @@ body {
 h1, h2 {
     text-align: center;
     color: #8b5e34; /* Warm brown */
+    font-family: "Cinzel", serif; /* Royal font */
 }
 
 /* Containers */
@@ -21,7 +22,7 @@ h1, h2 {
     max-width: 600px;
     margin: 50px auto;
     padding: 20px;
-    background-color: rgba(255, 248, 240, 0.9); /* Creamy beige with slight transparency */
+    background-color: rgba(255, 248, 240, 0.8); /* Slightly more transparent creamy beige */
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -34,14 +35,14 @@ input[type="text"], input[type="password"], #message-input {
     border: 2px solid #8b5e34; /* Warm brown border */
     border-radius: 5px;
     font-size: 16px;
-    background-color: #f5e9df; /* Light creamy beige */
+    background-color: rgba(245, 233, 223, 0.8); /* Slightly more transparent light creamy beige */
     outline: none;
 }
 
 /* Input Field Focus */
 input:focus {
     border-color: #a87448; /* Soft caramel brown border on focus */
-    box-shadow: 0 0 5px #a87448;
+    box-shadow: 0 0 5px rgba(168, 116, 72, 0.8); /* Slightly transparent focus glow */
 }
 
 /* Buttons */
@@ -53,7 +54,7 @@ button {
     font-size: 16px;
     font-weight: bold;
     color: #fff;
-    background-color: #8b5e34; /* Warm brown */
+    background-color: rgba(139, 94, 52, 0.85); /* Slightly transparent warm brown */
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -62,7 +63,7 @@ button {
 
 /* Button Hover Effect */
 button:hover {
-    background-color: #5c3b21; /* Darker chocolate brown */
+    background-color: rgba(92, 59, 33, 0.85); /* Slightly more transparent darker chocolate brown */
 }
 
 /* Messages Section */
@@ -71,8 +72,8 @@ button:hover {
     overflow-y: auto;
     padding: 10px;
     margin: 10px 0;
-    background-color: rgba(240, 224, 208, 0.9); /* Light creamy beige with slight transparency */
-    border: 2px solid #8b5e34; /* Warm brown border */
+    background-color: rgba(240, 224, 208, 0.7); /* More transparent light creamy beige */
+    border: 2px solid rgba(139, 94, 52, 0.85); /* Slightly transparent warm brown border */
     border-radius: 5px;
 }
 
@@ -80,17 +81,15 @@ button:hover {
 #messages div {
     margin: 5px 0;
     padding: 8px;
-    background-color: #f5e1c8; /* Soft caramel background */
-    border: 1px solid #a87448; /* Light brown border */
+    background-color: rgba(245, 225, 200, 0.8); /* Slightly more transparent soft caramel background */
+    border: 1px solid rgba(168, 116, 72, 0.8); /* Slightly transparent light brown border */
     border-radius: 5px;
     color: #4d2e1e; /* Chocolate brown text */
 }
 
-
-
 /* Welcome Message */
 #welcome-message {
-    color: #5c3b21; /* Dark chocolate brown */
+    color: rgba(92, 59, 33, 0.85); /* Slightly transparent dark chocolate brown */
     font-weight: bold;
 }
 
@@ -100,7 +99,7 @@ button:hover {
 }
 
 #messages::-webkit-scrollbar-thumb {
-    background-color: #8b5e34; /* Warm brown scrollbar */
+    background-color: rgba(139, 94, 52, 0.85); /* Slightly transparent warm brown scrollbar */
     border-radius: 5px;
 }
 
@@ -112,7 +111,7 @@ button:hover {
 }
 
 #dropdown-button {
-    background-color: #8b5e34;
+    background-color: rgba(139, 94, 52, 0.85); /* Slightly transparent warm brown */
     color: white;
     border: none;
     border-radius: 5px;
@@ -123,7 +122,7 @@ button:hover {
 }
 
 #dropdown-button:hover {
-    background-color: #5c3b21;
+    background-color: rgba(92, 59, 33, 0.85); /* Slightly transparent darker brown */
 }
 
 #dropdown-menu {
@@ -131,9 +130,28 @@ button:hover {
     position: absolute;
     right: 0;
     top: 50px;
-    background-color: #fffaf0; /* Light beige */
-    border: 2px solid #8b5e34;
+    background-color: rgba(255, 250, 240, 0.8); /* More transparent light beige */
+    border: 2px solid rgba(139, 94, 52, 0.85); /* Slightly transparent warm brown */
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 100;
+}
+
+/* Clear Chat Button */
+#clear-chat-button {
+    display: block;
+    margin: 10px auto; /* Center it under the send button */
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: rgba(139, 94, 52, 0.85); /* Slightly transparent warm brown */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#clear-chat-button:hover {
+    background-color: rgba(92, 59, 33, 0.85); /* Slightly transparent darker brown */
 }
