@@ -3,6 +3,7 @@ const http = require('http');
 const { Server } = require('socket.io');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+require('dotenv').config(); // Load environment variables from .env file
 
 const app = express();
 const server = http.createServer(app);
@@ -14,7 +15,7 @@ app.use(express.static('public')); // Serve static files from the public directo
 
 // MongoDB connection
 mongoose
-    .connect('mongodb+srv://sagesatsavia2607:Ae90WIsINstgLgc4@chat-app.431tg.mongodb.net/chat', {
+    .connect(process.env.MONGO_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     })
