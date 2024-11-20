@@ -1,0 +1,139 @@
+/* General Body Styling */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-image: url('chat.jpg'); /* Background image for the whole page */
+    background-size: cover; /* Ensures the image covers the entire page */
+    background-position: center; /* Centers the image */
+    background-attachment: fixed; /* Makes the image stay fixed during scroll */
+    color: #4d2e1e; /* Chocolate brown text */
+}
+
+/* Header for Application */
+h1, h2 {
+    text-align: center;
+    color: #8b5e34; /* Warm brown */
+}
+
+/* Containers */
+#auth-container, #chat-container {
+    width: 80%;
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: rgba(255, 248, 240, 0.9); /* Creamy beige with slight transparency */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Input Fields */
+input[type="text"], input[type="password"], #message-input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid #8b5e34; /* Warm brown border */
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #f5e9df; /* Light creamy beige */
+    outline: none;
+}
+
+/* Input Field Focus */
+input:focus {
+    border-color: #a87448; /* Soft caramel brown border on focus */
+    box-shadow: 0 0 5px #a87448;
+}
+
+/* Buttons */
+button {
+    display: block;
+    width: 100%;
+    padding: 10px 20px;
+    margin: 10px 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #8b5e34; /* Warm brown */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Button Hover Effect */
+button:hover {
+    background-color: #5c3b21; /* Darker chocolate brown */
+}
+
+/* Messages Section */
+#messages {
+    height: 600px; /* Increased height for a longer chatbox */
+    overflow-y: auto;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: rgba(240, 224, 208, 0.9); /* Light creamy beige with slight transparency */
+    border: 2px solid #8b5e34; /* Warm brown border */
+    border-radius: 5px;
+}
+
+/* Each Chat Message */
+#messages div {
+    margin: 5px 0;
+    padding: 8px;
+    background-color: #f5e1c8; /* Soft caramel background */
+    border: 1px solid #a87448; /* Light brown border */
+    border-radius: 5px;
+    color: #4d2e1e; /* Chocolate brown text */
+}
+
+
+
+/* Welcome Message */
+#welcome-message {
+    color: #5c3b21; /* Dark chocolate brown */
+    font-weight: bold;
+}
+
+/* Chocolate-Themed Scrollbar */
+#messages::-webkit-scrollbar {
+    width: 10px;
+}
+
+#messages::-webkit-scrollbar-thumb {
+    background-color: #8b5e34; /* Warm brown scrollbar */
+    border-radius: 5px;
+}
+
+/* Dropdown Menu */
+#dropdown {
+    text-align: right;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+#dropdown-button {
+    background-color: #8b5e34;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#dropdown-button:hover {
+    background-color: #5c3b21;
+}
+
+#dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 50px;
+    background-color: #fffaf0; /* Light beige */
+    border: 2px solid #8b5e34;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+}
